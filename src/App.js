@@ -1,6 +1,7 @@
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import * as Colors from "@material-ui/core/colors";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Header from "./Header";
 
 const theme = createTheme({
   palette: {
@@ -13,7 +14,7 @@ function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <div className="App">
-        <header className="App-header">a</header>
+        <Header/>
         <div className="App-body">
           <div className="content-wrapper">
             <Router>
