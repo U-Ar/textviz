@@ -2,6 +2,7 @@ import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import * as Colors from "@material-ui/core/colors";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./Header";
+import PostTextContent from "./PostTextContent";
 
 const theme = createTheme({
   palette: {
@@ -17,18 +18,19 @@ function App() {
         <Header/>
         <div className="App-body">
           <div className="content-wrapper">
-            <Router>
+            {/*<Router>
               <Routes>
                 <Route path="/">
-                  {/*<PostTextContent /> */}
+                  {/*<PostTextContent /> 
                   hello, world
                 </Route>
                 <Route path="/item">
-                  {/*<ItemContent /> */}
+                  <ItemContent /> 
                   hello, world2
                 </Route>
               </Routes>
-            </Router>
+            </Router>*/}
+            <PostTextContent/>
           </div>
           <div className="sidebar-wrapper"></div>
         </div>
