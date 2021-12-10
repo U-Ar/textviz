@@ -20,7 +20,7 @@ function App() {
             <Router>
               <Routes>
                 <Route path="/">
-                  {/*<InitialContent /> */}
+                  {/*<PostTextContent /> */}
                   hello, world
                 </Route>
                 <Route path="/item">
