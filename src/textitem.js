@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+/*
 // Stateの初期状態
 const initialState = {
   id: null,
@@ -61,4 +61,12 @@ export const getText = (id) => {
   }
 };
 
-export default textitem;
+export const deleteText = (id) => {
+    const textUrl = `https://indextify.herokuapp.com/text/${id}`;
+    return async (dispatch) => {
+        const response = await axios({ method: "delete", url: textUrl });
+        
+    }
+}
+
+export default textitem;*/

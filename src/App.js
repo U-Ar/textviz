@@ -1,8 +1,9 @@
-import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
-import * as Colors from "@material-ui/core/colors";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import * as Colors from "@mui/material/colors";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./Header";
 import PostTextContent from "./PostTextContent";
+import Sidebar from "./Sidebar";
 
 const theme = createTheme({
   palette: {
@@ -13,7 +14,7 @@ const theme = createTheme({
 
 function App() {
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <div className="App">
         <Header/>
         <div className="App-body">
@@ -32,10 +33,12 @@ function App() {
             </Router>*/}
             <PostTextContent/>
           </div>
-          <div className="sidebar-wrapper"></div>
+          <div className="sidebar-wrapper">
+            <Sidebar></Sidebar>
+          </div>
         </div>
       </div>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 }
 
