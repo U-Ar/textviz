@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { TextField, Button, Box } from "@mui/material";
+import axios from 'axios';
+
+import { useSelector, useDispatch } from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -14,28 +16,52 @@ const useStyles = makeStyles((theme) => ({
 const PostTextContent = () => {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
   const [postText, setPostText] = useState('');
 
   const handleOnClickPost = async () => {
-    alert('clicked post button!');
+    const textsUrl = "https://indextify.herokuapp.com/texts/";
+    const response = await axios.post(textsUrl,postText, {
+      headers: {
+        "Content-Type" : "text/plain",
+      }
+    });
+
+    console.log("postresponse: ",response);
+
+    const textUrl = `https://indextify.herokuapp.com/text/${response.data.id}`;
+    const textResponse = await axios.get(textUrl);
+    console.log(textResponse.data);
+    if (textResponse.status === 200) {
+      dispatch({
+          type: "GET_TEXT",
+          payload: textResponse.data,
+      });
+    } else {
+      dispatch({
+          type: "GET_TEXT",
+          payload: null,
+      });
+    }
+
+    const textsResponse = await axios.get(textsUrl);
+    console.log(textsResponse.data);
+    dispatch({
+        type: "GET_TEXTS",
+        payload: textsResponse.data
+    });
   };
 
   return (
-    <div style={{ width: '100%' }}>
-      <div style={{ textAlign: 'center' }}>
-        <h2>
-          文字列を登録するやつ
-        </h2>
-        <div className="postBox" style={{ width: '100%', maxWidth: 600 }}>
-          <div>
-            <h3>文字列を入力</h3>
+    <Box sx={{backgroundColor: "primary.light"}}>
+      <div style={{ textAlign: 'center', padding: "10px"}}>
+        <div className="postBox" style={{ width: '100%' }}>
             <TextField
               id="post-text"
-              label="文字列"
-              placeholder="接尾辞木を知りたい文字列を入力"
+              placeholder="接尾辞木を知りたい文字列を入力 (例) helloworld"
               value={postText}
               onChange={(e) => setPostText(e.target.value)}
-              helperText="e.g. helloworld"
               margin="normal"
               fullWidth
               InputLabelProps={{ shrink: true }}
@@ -45,21 +71,16 @@ const PostTextContent = () => {
             />
             <Button
               className={classes.button}
-              variant="contained"
-              color="secondary"
+              variant="outlined"
+              color="primary"
               onClick={handleOnClickPost}
               disabled={postText === ''}
             >
-              登録
+              送信
             </Button>
-          </div>
-          <div>
-            <h3>検索された書籍は？</h3>
-            TODO ここに検索結果を表示する
-          </div>
         </div>
       </div>
-    </div>
+    </Box>
   );
 };
 

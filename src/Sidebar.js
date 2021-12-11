@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
+import { ListItem, ListItemButton, ListItemText, List, Box } from "@mui/material";
 
 import { FixedSizeList } from "react-window";
 
@@ -15,6 +13,7 @@ const Sidebar = () => {
     const dispatch = useDispatch();
 
     const texts = useSelector((state) => state.texts);
+    const showntext = useSelector((state) => state.text);
     
     useEffect(() => {
         const getTexts = async () => {
@@ -28,38 +27,39 @@ const Sidebar = () => {
         }
         getTexts();
     }, [dispatch]);
-  
-    /*return (
-      <div style={{ width: '100%' }}>
-          <FixedSizeList
-            height={400}
-            width={360}
-            itemSize={46}
-            itemCount={200}
-            overscanCount={5}
-          >
-              {texts.map((text) => (
-                  <ListItem component="div" disablepadding>
-                      <ListItemButton>
-                          <ListItemText primary={text.text}></ListItemText>
-                      </ListItemButton>
-                  </ListItem>
-              ))}
-          </FixedSizeList>
-      </div>
-    );*/
+
+    const getFunctionGetById = (id) => {
+        return async () => {
+            const textUrl = `https://indextify.herokuapp.com/text/${id}`;
+            const response = await axios.get(textUrl);
+            console.log(response.data);
+            if (response.status === 200) {
+                dispatch({
+                    type: "GET_TEXT",
+                    payload: response.data,
+                });
+            } else {
+                dispatch({
+                    type: "GET_TEXT",
+                    payload: null,
+                });
+            }
+        }
+    }
 
     return (
-        <div style={{ width: '100%' }}>
-          <ul
-          >
+        <Box sx={{backgroundColor: "primary.dark"}}>
+          <List style={{ maxHeight: "1000px", overflow: "auto"}}>
               {texts.map((text) => (
-                  <li component="div" disablepadding>
-                      {text.text}
-                  </li>
+                <ListItem component="div" disablepadding>
+                  <ListItemButton onClick={getFunctionGetById(text.id)}
+                  selected={(showntext!==null && text.id===showntext.id) ? true : false}>
+                    <ListItemText primary={text.text} secondary={`ID:${text.id} Date:${text.date}`}></ListItemText>
+                  </ListItemButton>
+                </ListItem>
               ))}
-          </ul>
-      </div>
+          </List>
+        </Box>
     )
   };
   

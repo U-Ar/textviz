@@ -1,14 +1,29 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import * as Colors from "@mui/material/colors";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./Header";
+import Footer from "./Footer";
 import PostTextContent from "./PostTextContent";
+import GetTextContent from "./GetTextContent";
 import Sidebar from "./Sidebar";
 
+import { Container, Grid, Stack } from "@mui/material";
+
+
+
 const theme = createTheme({
+  shadows: ["none"],
   palette: {
-    primary: Colors.lightBlue,
-    secondary: Colors.lightGreen,
+    primary: {
+      light: '#4fb3bf',
+      main: '#00838f',
+      dark: '#005662',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#fff263',
+      main: '#fbc02d',
+      dark: '#c49000',
+      contrastText: '#000',
+    },
   },
 });
 
@@ -17,26 +32,20 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Header/>
-        <div className="App-body">
-          <div className="content-wrapper">
-            {/*<Router>
-              <Routes>
-                <Route path="/">
-                  {/*<PostTextContent /> 
-                  hello, world
-                </Route>
-                <Route path="/item">
-                  <ItemContent /> 
-                  hello, world2
-                </Route>
-              </Routes>
-            </Router>*/}
-            <PostTextContent/>
-          </div>
-          <div className="sidebar-wrapper">
-            <Sidebar></Sidebar>
-          </div>
-        </div>
+        <Container fixed style={{marginTop:"10px"}}>
+          <Grid container spacing={1}>
+            <Grid item xs={8}>
+              <Stack spacing={1}>
+                <PostTextContent/>
+                <GetTextContent/>
+              </Stack>
+            </Grid>
+            <Grid item xs={4}>
+              <Sidebar/>
+            </Grid>
+          </Grid>
+          <Footer/>
+        </Container>
       </div>
     </ThemeProvider>
   );
