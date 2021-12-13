@@ -14,6 +14,8 @@ const Sidebar = () => {
 
     const texts = useSelector((state) => state.texts);
     const showntext = useSelector((state) => state.text);
+
+    const [loading, setLoading] = useState('');
     
     useEffect(() => {
         const getTexts = async () => {
@@ -25,7 +27,9 @@ const Sidebar = () => {
                 payload: response.data
             })
         }
+        setLoading(true);
         getTexts();
+        setLoading(false);
     }, [dispatch]);
 
     const getFunctionGetById = (id) => {
@@ -48,7 +52,7 @@ const Sidebar = () => {
     }
 
     return (
-        <Box sx={{backgroundColor: "primary.dark"}}>
+        <Box>
           <List style={{ maxHeight: "1000px", overflow: "auto"}}>
               {texts.map((text) => (
                 <ListItem component="div" disablepadding>

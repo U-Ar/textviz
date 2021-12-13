@@ -54,7 +54,7 @@ const PostTextContent = () => {
   };
 
   return (
-    <Box sx={{backgroundColor: "primary.light"}}>
+    <Box>
       <div style={{ textAlign: 'center', padding: "10px"}}>
         <div className="postBox" style={{ width: '100%' }}>
             <TextField
